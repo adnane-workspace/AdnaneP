@@ -7,6 +7,7 @@ import Projects from './components/Projects/Projects';
 import Experience from './components/Experience/Experience';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
+import Chatbot from './components/Chatbot/Chatbot';
 import styles from './App.module.css';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                 </main>
 
                 <Footer />
+                <Chatbot />
             </div>
         </ThemeProvider>
     );

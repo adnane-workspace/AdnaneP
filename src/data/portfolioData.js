@@ -1,4 +1,3 @@
-// Données du portfolio - Personnalisé avec votre CV
 
 export const personalInfo = {
     name: "EL MENOUAR Adnane",
