@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMessageSquare, FiX, FiSend } from 'react-icons/fi';
-import { personalInfo } from '../../data/portfolioData';
+import { personalInfo, projects, experiences, about } from '../../data/portfolioData';
 import styles from './Chatbot.module.css';
 
 const SUGGESTED_QUESTIONS = [
@@ -38,11 +38,50 @@ const Chatbot = () => {
     // Simple local responder (no RAG)
     const simpleResponder = async (text) => {
         const t = text.toLowerCase();
-        if (t.includes('projet') || t.includes('projets')) return "Vous pouvez consulter mes projets dans la section 'Mes Projets'. Souhaitez-vous en voir un en particulier ?";
-        if (t.includes('contact') || t.includes('contacter')) return `Vous pouvez me contacter par email: ${personalInfo.email}`;
-        if (t.includes('competences') || t.includes('compétences') || t.includes('technologies')) return 'Je maîtrise Laravel, React, MySQL, Python, Java, Docker et d\'autres technologies web.';
-        if (t.includes('cv') || t.includes('resume') || t.includes('curriculum')) return `Mon CV est disponible ici : ${personalInfo.resume}`;
-        return "Bonjour ! Je suis l'assistant d'Adnane. Posez une question sur ses projets, compétences ou expériences.";
+        const normalized = t.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+
+        if (normalized.match(/\b(projet|projets|portfolio)\b/)) {
+            const projectNames = projects.map((project) => project.title).join(', ');
+            return `Voici quelques projets récents : ${projectNames}. Vous pouvez demander des détails sur un projet en particulier.`;
+        }
+
+        if (normalized.match(/\b(contact|contacter|email|mail)\b/)) {
+            return `Vous pouvez me contacter par email : ${personalInfo.email} ou via le formulaire de contact sur le portfolio.`;
+        }
+
+        if (normalized.match(/\b(competen|competence|competences|technologie|technologies|skill|skills)\b/)) {
+            return `Adnane maîtrise notamment : Laravel, React, MySQL, Python, Java, Docker, PHP, Keycloak et JavaScript.`;
+        }
+
+        if (normalized.match(/\b(cv|resume|curriculum|c v|curriculum vitae)\b/)) {
+            return `Mon CV est disponible ici : ${personalInfo.resume}`;
+        }
+
+        if (normalized.match(/\b(experience|experiences|stage|stages|stagiaire|stages?)\b/)) {
+            const expSummaries = experiences
+                .filter((exp) => exp.type === 'work')
+                .map((exp) => `${exp.title} chez ${exp.company}`)
+                .join(', ');
+            return `Adnane a travaillé sur : ${expSummaries}. Consultez la section expérience pour plus de détails.`;
+        }
+
+        if (normalized.match(/\b(a propos|apropos|bio|qui es tu|qui es tu|present|parle moi|parle\-moi)\b/)) {
+            return about.bio;
+        }
+
+        if (normalized.match(/\b(qualit|fort|atout|points forts)\b/)) {
+            return 'Adnane est rigoureux, autonome et orienté résultats. Il sait travailler en équipe et produire des interfaces soignées et performantes.';
+        }
+
+        if (normalized.match(/\b(formation|etude|etudes|diplome|diplome|universite|ofppt|upf)\b/)) {
+            return 'Il étudie actuellement en cycle d\'ingénieur en Génie Informatique à l\'Université Privée de Fès et est diplômé d\'un DTS Full Stack à l\'OFPPT.';
+        }
+
+        if (normalized.match(/\b(bonjour|salut|hello|coucou)\b/)) {
+            return 'Bonjour ! Je suis l\'assistant d\'Adnane. Posez une question sur ses projets, ses compétences ou ses expériences.';
+        }
+
+        return 'Je suis l\'assistant d\'Adnane. Posez une question sur ses projets, compétences ou expériences, et je vous répondrai.';
     };
 
     const handleSendText = async (text) => {
