@@ -275,6 +275,13 @@
     transform: none;
 }
 
+.placeholderBubble {
+    opacity: 0.75;
+    font-style: italic;
+    background: rgba(var(--color-primary-rgb), 0.08);
+    color: var(--color-text-secondary);
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }

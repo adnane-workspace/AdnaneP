@@ -113,8 +113,32 @@ export const projects = [
         image: "/portfolio-adnane/images/project2.jpg",
         tags: ["Laravel", "MySQL", "PHP"],
         github: "https://github.com/adnane-workspace",
+    },
+    {
+        id: 4,
+        title: "Détection ASL en Temps Réel",
+        description: "Système de détection de la langue des signes (ASL) en temps réel : capture de gestes via caméra, reconnaissance des lettres/ mots, et traduction. Backend en FastAPI + PyTorch, inférence optimisée avec TorchScript et WebSocket pour la prise en charge mobile.",
+        image: "/portfolio-adnane/images/sign.png",
+        tags: ["PyTorch", "FastAPI", "WebSocket", "Mobile", "TorchScript"],
+        github: "https://github.com/adnane-workspace",
+    },
+    {
+        id: 5,
+        title: "STOCKLY — Plateforme de Gestion de Stock",
+        description: "Plateforme complète de gestion des stocks et commerce pour PME. Backend Spring Boot + MySQL, frontend Angular, authentification JWT, conteneurisation Docker et déploiement cloud.",
+        image: "/portfolio-adnane/images/stokly.jpg",
+        tags: ["Spring Boot", "Angular", "MySQL", "Docker", "JWT"],
+        github: "https://github.com/adnane-workspace",
+    },
+    {
+        id: 6,
+        title: "STOCKLY — Plateforme de Gestion de Stock",
+        description: "Système académique complet avec tableau de bord multi-rôles, gestion CRUD des étudiants et professeurs, planification dynamique des filières/modules/salles/emplois du temps, saisie sécurisée des notes par les professeurs et consultation en temps réel par les étudiants, calcul automatique des moyennes pondérées (GPA). Interface premium basée sur Tailwind CSS (Geist/Inter, glassmorphism).",
+        image: "/portfolio-adnane/images/uni.png",
+        tags: ["Laravel", "MySQL", "Docker", "JWT"],
+        github: "https://github.com/adnane-workspace",
     }
-];
+];  
 
 export const experiences = [
     {
@@ -188,7 +212,7 @@ export const about = {
     ],
     stats: [
         { label: "Années d'études", value: "3+" },
-        { label: "Projets réalisés", value: "3+" },
+        { label: "Projets réalisés", value: "5+" },
         { label: "Stages complétés", value: "3" },
         { label: "Technologies", value: "10+" }
     ]

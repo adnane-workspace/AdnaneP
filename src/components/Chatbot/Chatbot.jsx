@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMessageSquare, FiX, FiSend } from 'react-icons/fi';
-import { personalInfo, skills, projects, experiences, about } from '../../data/portfolioData';
+import { personalInfo } from '../../data/portfolioData';
 import styles from './Chatbot.module.css';
 
 const SUGGESTED_QUESTIONS = [
@@ -14,9 +14,15 @@ const SUGGESTED_QUESTIONS = [
 const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
-        { text: `Bonjour ! 👋 Je suis l'assistant personnel IA d'Adnane. Je suis là pour vous montrer pourquoi il est le profil idéal pour votre prochain projet. Que souhaitez-vous explorer en premier ?`, isBot: true }
+        {
+            id: 0,
+            text: `Bonjour ! 👋 Je suis l'assistant personnel IA d'Adnane. Je suis là pour vous montrer pourquoi il est le profil idéal pour votre prochain projet. Que souhaitez-vous explorer en premier ?`,
+            isBot: true,
+            isPlaceholder: false
+        }
     ]);
     const [inputText, setInputText] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
 
     const toggleChat = () => setIsOpen(!isOpen);
@@ -29,45 +35,54 @@ const Chatbot = () => {
         scrollToBottom();
     }, [messages]);
 
-    const handleSendText = (text) => {
-        if (!text.trim()) return;
+    // Simple local responder (no RAG)
+    const simpleResponder = async (text) => {
+        const t = text.toLowerCase();
+        if (t.includes('projet') || t.includes('projets')) return "Vous pouvez consulter mes projets dans la section 'Mes Projets'. Souhaitez-vous en voir un en particulier ?";
+        if (t.includes('contact') || t.includes('contacter')) return `Vous pouvez me contacter par email: ${personalInfo.email}`;
+        if (t.includes('competences') || t.includes('compétences') || t.includes('technologies')) return 'Je maîtrise Laravel, React, MySQL, Python, Java, Docker et d\'autres technologies web.';
+        if (t.includes('cv') || t.includes('resume') || t.includes('curriculum')) return `Mon CV est disponible ici : ${personalInfo.resume}`;
+        return "Bonjour ! Je suis l'assistant d'Adnane. Posez une question sur ses projets, compétences ou expériences.";
+    };
 
-        // User message
-        setMessages(prev => [...prev, { text, isBot: false }]);
+    const handleSendText = async (text) => {
+        if (!text.trim() || isLoading) return;
+
+        const userMessage = {
+            id: Date.now() + Math.random(),
+            text: text.trim(),
+            isBot: false,
+            isPlaceholder: false
+        };
+
+        const placeholderMessage = {
+            id: `placeholder-${Date.now()}`,
+            text: "Génération de la réponse...",
+            isBot: true,
+            isPlaceholder: true
+        };
+
+        setMessages((prev) => [...prev, userMessage, placeholderMessage]);
         setInputText("");
+        setIsLoading(true);
 
-        // Bot response logic
-        setTimeout(() => {
-            const lowerInput = text.toLowerCase();
-            let botReply = `Merci pour votre message ! N'hésitez pas à me contacter directement à l'adresse ${personalInfo.email} pour en discuter d'avantage.`;
-            
-            if (lowerInput.includes('engager') || lowerInput.includes('pourquoi') || lowerInput.includes('profil')) {
-                botReply = `${personalInfo.name} est un développeur très passionné. Doté d'un fort esprit d'initiative, il apprend vite et possède un profil web complet. Ses stages chez Nelogix ou COS ONEE démontrent sa grande capacité d'adaptation et de réalisation !`;
-            
-            } else if (lowerInput.includes('qualité') || lowerInput.includes('atout') || lowerInput.includes('soft skill')) {
-                botReply = `Ses meilleures qualités sont : son apprentissage rapide, sa capacité d'analyse approfondie, son esprit d'initiative et son excellent relationnel en équipe ! Il est particulièrement rigoureux et s'intègre vite.`;
-
-            } else if (lowerInput.includes('projet') || lowerInput.includes('portfolio') || lowerInput.includes('réalisation')) {
-                const projectNames = projects.map(p => p.title).join(", ");
-                botReply = `Adnane a réalisé plusieurs projets professionnels à forte valeur ajoutée, tels que : ${projectNames}. Vous pouvez découvrir les détails techniques dans la section Projets !`;
-            
-            } else if (lowerInput.includes('skil') || lowerInput.includes('compétence') || lowerInput.includes('techno') || lowerInput.includes('savoir')) {
-                const topSkills = skills.filter(s => s.level >= 80).map(s => s.name).join(", ");
-                botReply = `C'est un développeur full-stack. Ses compétences les plus fortes incluent notamment : ${topSkills}. Il maîtrise également bien d'autres technos comme Docker, Java et Python.`;
-            
-            } else if (lowerInput.includes('contact') || lowerInput.includes('email') || lowerInput.includes('mail') || lowerInput.includes('téléphone')) {
-                botReply = `Pour le contacter, c'est très simple ! Envoyez-lui un email sur ${personalInfo.email} ou appelez-le au ${personalInfo.phone}. Il est motivé et très réactif !`;
-            
-            } else if (lowerInput.includes('stage') || lowerInput.includes('emploi') || lowerInput.includes('disponible') || lowerInput.includes('expérience')) {
-                const recentJob = experiences.find(e => e.type === "work");
-                botReply = `Il a déjà eu l'occasion d'effectuer un stage très formateur de ${recentJob.title} chez ${recentJob.company}. Il est activement à la recherche de nouvelles opportunités pour apporter sa valeur technique !`;
-            
-            } else if (lowerInput.includes('bonjour') || lowerInput.includes('salut') || lowerInput.includes('hello')) {
-                botReply = `Bonjour à vous ! Je suis là pour mettre en avant les atouts d'Adnane. De quoi souhaitez-vous discuter ?`;
-            }
-
-            setMessages(prev => [...prev, { text: botReply, isBot: true }]);
-        }, 800);
+        try {
+            const answer = await simpleResponder(userMessage.text);
+            setMessages((prev) => prev.map((msg) =>
+                msg.id === placeholderMessage.id
+                    ? { ...msg, text: answer, isPlaceholder: false }
+                    : msg
+            ));
+        } catch (error) {
+            console.error('[Chatbot] Error:', error);
+            setMessages((prev) => prev.map((msg) =>
+                msg.id === placeholderMessage.id
+                    ? { ...msg, text: '⚠️ Une erreur est survenue. Veuillez réessayer plus tard.', isPlaceholder: false }
+                    : msg
+            ));
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleSendMessage = (e) => {
@@ -103,7 +118,7 @@ const Chatbot = () => {
                             {messages.map((msg, index) => (
                                 <React.Fragment key={index}>
                                     <div className={`${styles.messageWrapper} ${msg.isBot ? styles.msgBot : styles.msgUser}`}>
-                                        <div className={styles.messageBubble}>
+                                        <div className={`${styles.messageBubble} ${msg.isPlaceholder ? styles.placeholderBubble : ''}`}>
                                             {msg.text}
                                         </div>
                                     </div>
