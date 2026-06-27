@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowDown } from 'react-icons/fi';
 import { personalInfo, about } from '../../data/portfolioData';
 import Button from '../Button/Button';
@@ -9,6 +9,14 @@ import styles from './Hero.module.css';
  * Section Hero - Accueil complet avec présentation
  */
 const Hero = () => {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prev) => (prev + 1) % personalInfo.avatars.length);
+        }, 2000);
+        return () => clearInterval(interval);
+    }, []);
     // Animations Framer Motion
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -93,11 +101,18 @@ const Hero = () => {
                         transition={{ duration: 0.8, delay: 0.5 }}
                     >
                         <div className={styles.imageContainer}>
-                            <img
-                                src={personalInfo.avatar}
-                                alt={personalInfo.name}
-                                className={styles.avatarImage}
-                            />
+                            <AnimatePresence mode="popLayout">
+                                <motion.img
+                                    key={currentImageIndex}
+                                    src={personalInfo.avatars[currentImageIndex]}
+                                    alt={personalInfo.name}
+                                    className={styles.avatarImage}
+                                    initial={{ opacity: 0, scale: 1.08, filter: "blur(4px)" }}
+                                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                                    exit={{ opacity: 0, scale: 0.94, filter: "blur(4px)" }}
+                                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                                />
+                            </AnimatePresence>
                             <div className={styles.imageDecoration}></div>
                         </div>
                     </motion.div>

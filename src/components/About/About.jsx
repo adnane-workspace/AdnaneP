@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { about, personalInfo } from '../../data/portfolioData';
 import Section from '../Section/Section';
 import styles from './About.module.css';
@@ -8,6 +8,15 @@ import styles from './About.module.css';
  * Section À Propos
  */
 const About = () => {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prev) => (prev + 1) % personalInfo.avatars.length);
+        }, 2000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <Section id="about">
             <h2 className="section-title">À Propos de Moi</h2>
@@ -22,11 +31,18 @@ const About = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <div className={styles.imageContainer}>
-                        <img
-                            src={personalInfo.avatar}
-                            alt={personalInfo.name}
-                            className={styles.imagePlaceholder}
-                        />
+                        <AnimatePresence mode="popLayout">
+                            <motion.img
+                                key={currentImageIndex}
+                                src={personalInfo.avatars[currentImageIndex]}
+                                alt={personalInfo.name}
+                                className={styles.imagePlaceholder}
+                                initial={{ opacity: 0, scale: 1.08, filter: "blur(4px)" }}
+                                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                                exit={{ opacity: 0, scale: 0.94, filter: "blur(4px)" }}
+                                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                            />
+                        </AnimatePresence>
                         <div className={styles.imageDecoration}></div>
                     </div>
                 </motion.div>

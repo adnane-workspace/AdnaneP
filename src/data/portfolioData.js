@@ -8,6 +8,13 @@ export const personalInfo = {
     phone: "+212 663-219524",
     location: "Lotissement Mamounia, Route de Setrou - Fès",
     avatar: "/portfolio-adnane/images/avatar.jpg",
+    avatar2: "/portfolio-adnane/images/adnane2.jpeg",
+    avatar3: "/portfolio-adnane/images/adnane3.jpeg",
+    avatars: [
+        "/portfolio-adnane/images/avatar.jpg",
+        "/portfolio-adnane/images/adnane2.jpeg",
+        "/portfolio-adnane/images/adnane3.jpeg"
+    ],
     resume: "/portfolio-adnane/documents/cv.pdf"
 };
 
