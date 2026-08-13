@@ -23,12 +23,20 @@
 .imageContainer {
     position: relative;
     width: 100%;
-    height: 200px;
+    aspect-ratio: 16 / 10;
     background: var(--gradient-primary);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+}
+
+.imageContainer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(20, 12, 8, 0.28));
+    pointer-events: none;
 }
 
 .imagePlaceholder {
@@ -59,15 +67,18 @@
 
 .featuredBadge {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: rgba(255, 255, 255, 0.95);
-    color: var(--color-primary);
-    padding: 0.4rem 0.8rem;
+    top: 0.85rem;
+    left: 0.85rem;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--color-text);
+    padding: 0.28rem 0.7rem;
     border-radius: var(--radius-full);
-    font-size: var(--font-size-xs);
+    font-size: 0.7rem;
     font-weight: 700;
-    box-shadow: var(--shadow-md);
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
 /* Contenu */
@@ -147,7 +158,7 @@
     }
 
     .imageContainer {
-        height: 180px;
+        aspect-ratio: 16 / 10;
     }
 
     .projectNumber {

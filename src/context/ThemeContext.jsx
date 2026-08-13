@@ -20,10 +20,16 @@ export const ThemeProvider = ({ children }) => {
         return savedTheme || 'light';
     });
 
-    // Mettre à jour le thème dans le DOM et localStorage
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
+
+        const icon = document.querySelector("link[rel='icon']");
+        if (icon) {
+            icon.href = theme === 'dark'
+                ? '/favicon-dark.png'
+                : '/favicon.png';
+        }
     }, [theme]);
 
     // Fonction pour basculer entre light et dark

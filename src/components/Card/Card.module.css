@@ -1,21 +1,19 @@
 .card {
+    position: relative;
     background: var(--color-card-bg);
     border-radius: var(--radius-lg);
     padding: var(--spacing-md);
     box-shadow: var(--shadow-md);
     border: 1px solid var(--color-border);
-    transition: all var(--transition-base);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
     height: 100%;
-}
-
-.card.hover {
-    cursor: pointer;
+    overflow: hidden;
 }
 
 .card.hover:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: var(--shadow-xl);
-    border-color: var(--color-primary);
+    transform: translateY(-6px);
+    box-shadow: 0 22px 40px rgba(45, 27, 14, 0.12);
+    border-color: rgba(var(--color-primary-rgb), 0.35);
 }
 
 /* Effet de brillance au hover */
@@ -47,6 +45,6 @@
     }
 
     .card.hover:hover {
-        transform: translateY(-4px) scale(1.01);
+        transform: translateY(-4px);
     }
 }

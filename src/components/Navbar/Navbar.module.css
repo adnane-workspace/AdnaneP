@@ -76,7 +76,7 @@
 /* Navigation Links Desktop */
 .navLinks {
     display: flex;
-    gap: 2.5rem;
+    gap: 1.5rem;
     list-style: none;
     align-items: center;
 }
@@ -106,8 +106,13 @@
     color: var(--color-primary);
 }
 
-.navLink:hover::after {
+.navLink:hover::after,
+.navLinkActive::after {
     width: 100%;
+}
+
+.navLinkActive {
+    color: var(--color-primary);
 }
 
 /* Actions */
@@ -208,8 +213,12 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.mobileNavLink:hover {
+.mobileNavLink:hover,
+.mobileNavLinkActive {
     color: var(--color-primary);
+}
+
+.mobileNavLink:hover {
     padding-left: 10px;
 }
 

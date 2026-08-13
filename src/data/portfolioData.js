@@ -218,6 +218,44 @@ export const experiences = [
     }
 ];
 
+export const events = [
+    {
+        id: 4,
+        date: "09-08-2026",
+        location: "Casablanca",
+        title: "Café Cursor Casablanca",
+        images: ["/images/cursor1.jpeg", "/images/adnane3.jpeg"],
+        tags: ["Networking", "Cursor"]
+    },
+    {
+        id: 3,
+        date: "26-07-2026",
+        location: "Casablanca",
+        title: "Build with Gemma Hackathon Casablanca",
+        images: ["/images/gemma1.jpeg", "/images/adnane4.jpeg", "/images/gemma2.jpeg"],
+        tags: ["Gemma", "IA", "Google"],
+        result: "1ᵉ place"
+    },
+    {
+        id: 2,
+        date: "20-06-2026",
+        location: "Merzouga",
+        title: "Rallye IA - Future Lab",
+        images: ["/images/merz1.jpeg", "/images/merz2.jpeg"],
+        tags: ["hackathon", "IA", "Ingénierie", "Merzouga"]
+    },
+    {
+        id: 1,
+        date: "16-05-2026",
+        location: "UPF University",
+        title: "National UPF Robotics Competition — 9ᵉ édition",
+        images: ["/images/robotic2.jpeg", "/images/robotic1.jpeg", "/images/robotic3.jpeg"],
+        tags: ["Robotique", "Compétition", "UPF"],
+        featured: true,
+        result: "3ᵉ place"
+    }
+];
+
 export const about = {
     bio: "Étudiant en génie informatique, passionné par le développement full-stack et les nouvelles technologies. Je maîtrise plusieurs technologies dont Laravel, React, MySQL, Python et Java. Mon objectif est de renforcer mes compétences à travers des projets concrets et des expériences pratiques enrichissantes.",
     interests: [

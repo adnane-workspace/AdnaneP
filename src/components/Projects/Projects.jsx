@@ -81,7 +81,7 @@ const Projects = () => {
                                         loading="lazy"
                                     />
                                     {project.featured && (
-                                        <span className={styles.featuredBadge}>⭐ Featured</span>
+                                        <span className={styles.featuredBadge}>À la une</span>
                                     )}
                                 </div>
 

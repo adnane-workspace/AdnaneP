@@ -14,7 +14,7 @@ const Hero = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentImageIndex((prev) => (prev + 1) % personalInfo.avatars.length);
-        }, 2000);
+        }, 4000);
         return () => clearInterval(interval);
     }, []);
     // Animations Framer Motion
@@ -119,7 +119,7 @@ const Hero = () => {
                 </div>
 
                 <motion.a
-                    href="#skills"
+                    href="#events"
                     className={styles.scrollDown}
                     variants={itemVariants}
                     animate={{ y: [0, 10, 0] }}

@@ -62,16 +62,16 @@
 
 .timelineContent {
     background: var(--color-card-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-    transition: all var(--transition-base);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.12);
+    border-radius: 1.15rem;
+    padding: 1.25rem 1.35rem;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 }
 
 .timelineContent:hover {
-    border-color: var(--color-primary);
-    box-shadow: var(--shadow-md);
-    transform: translateX(5px);
+    border-color: rgba(var(--color-primary-rgb), 0.35);
+    box-shadow: 0 16px 32px rgba(45, 27, 14, 0.08);
+    transform: translateY(-3px);
 }
 
 .period {

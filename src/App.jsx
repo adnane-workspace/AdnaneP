@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
+import Events from './components/Events/Events';
 import Skills from './components/Skills/Skills';
 import Projects from './components/Projects/Projects';
 import Experience from './components/Experience/Experience';
@@ -19,6 +20,7 @@ function App() {
 
                 <main className={styles.main}>
                     <Hero />
+                    <Events />
                     <Projects />
                     <Skills />
                     <Experience />

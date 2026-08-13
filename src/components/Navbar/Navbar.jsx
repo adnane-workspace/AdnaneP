@@ -10,6 +10,7 @@ import styles from './Navbar.module.css';
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState('hero');
     const { theme } = useTheme();
 
     // Détecter le scroll pour changer le style de la navbar
@@ -43,14 +44,36 @@ const Navbar = () => {
         }
     }, [isMobileMenuOpen]);
 
-    // Navigation items
     const navItems = [
         { label: 'Accueil', href: '#hero' },
+        { label: 'Événements', href: '#events' },
         { label: 'Projets', href: '#projects' },
         { label: 'Compétences', href: '#skills' },
         { label: 'Expérience', href: '#experience' },
         { label: 'Contact', href: '#contact' }
     ];
+
+    useEffect(() => {
+        const ids = navItems.map((item) => item.href.slice(1));
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visible = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+                if (visible?.target?.id) {
+                    setActiveSection(visible.target.id);
+                }
+            },
+            { rootMargin: '-35% 0px -50% 0px', threshold: [0, 0.2, 0.5] }
+        );
+
+        ids.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect();
+    }, []);
 
     // Fermer le menu mobile lors du clic sur un lien
     const handleNavClick = () => {
@@ -83,7 +106,10 @@ const Navbar = () => {
                 <ul className={styles.navLinks}>
                     {navItems.map((item) => (
                         <li key={item.label}>
-                            <a href={item.href} className={styles.navLink}>
+                            <a
+                                href={item.href}
+                                className={`${styles.navLink} ${activeSection === item.href.slice(1) ? styles.navLinkActive : ''}`}
+                            >
                                 {item.label}
                             </a>
                         </li>
@@ -126,7 +152,7 @@ const Navbar = () => {
                             >
                                 <a
                                     href={item.href}
-                                    className={styles.mobileNavLink}
+                                    className={`${styles.mobileNavLink} ${activeSection === item.href.slice(1) ? styles.mobileNavLinkActive : ''}`}
                                     onClick={handleNavClick}
                                 >
                                     {item.label}
