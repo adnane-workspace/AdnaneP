@@ -7,15 +7,15 @@ export const personalInfo = {
     email: "adnaneelmenouar7@gmail.com",
     phone: "+212 663-219524",
     location: "Lotissement Mamounia, Route de Setrou - Fès",
-    avatar: "/AdnaneP/images/avatar.jpg",
-    avatar2: "/AdnaneP/images/adnane2.jpeg",
-    avatar3: "/AdnaneP/images/adnane3.jpeg",
+    avatar: "/images/avatar.jpg",
+    avatar2: "/images/adnane2.jpeg",
+    avatar3: "/images/adnane3.jpeg",
     avatars: [
-        "/AdnaneP/images/avatar.jpg",
-        "/AdnaneP/images/adnane2.jpeg",
-        "/AdnaneP/images/adnane3.jpeg"
+        "/images/avatar.jpg",
+        "/images/adnane2.jpeg",
+        "/images/adnane3.jpeg"
     ],
-    resume: "/AdnaneP/documents/cv.pdf"
+    resume: "/documents/cv.pdf"
 };
 
 export const socialLinks = {
@@ -101,7 +101,7 @@ export const projects = [
         id: 3,
         title: "Portfolio Personnel",
         description: "Portfolio professionnel moderne et responsive développé avec React et Vite. Présentation de mes compétences, projets et expériences avec animations fluides et mode sombre.",
-        image: "/AdnaneP/images/project3.png",
+        image: "/images/project3.png",
         tags: ["React", "Vite", "Framer Motion", "CSS"],
         github: "https://github.com/adnane-workspace",
     },
@@ -109,7 +109,7 @@ export const projects = [
         id: 1,
         title: "Gestion des Ressources Humaines",
         description: "Application web de gestion des ressources humaines avec Laravel, React et Keycloak. Gestion des employés, absences, présences et retards.",
-        image: "/AdnaneP/images/project1.png",
+        image: "/images/project1.png",
         tags: ["Laravel", "React"],
         github: "https://github.com/adnane-workspace",
     },
@@ -117,7 +117,7 @@ export const projects = [
         id: 2,
         title: "Gestion d'Hébergement",
         description: "Application web de gestion d'hébergement développée avec Laravel et MySQL. Automatisation des réservations, factures et suivi de disponibilité des chambres.",
-        image: "/AdnaneP/images/project2.jpg",
+        image: "/images/project2.jpg",
         tags: ["Laravel", "MySQL", "PHP"],
         github: "https://github.com/adnane-workspace",
     },
@@ -125,7 +125,7 @@ export const projects = [
         id: 4,
         title: "Détection ASL en Temps Réel",
         description: "Système de détection de la langue des signes (ASL) en temps réel : capture de gestes via caméra, reconnaissance des lettres/ mots, et traduction. Backend en FastAPI + PyTorch, inférence optimisée avec TorchScript et WebSocket pour la prise en charge mobile.",
-        image: "/AdnaneP/images/sign.png",
+        image: "/images/sign.png",
         tags: ["PyTorch", "FastAPI", "WebSocket", "Mobile", "TorchScript"],
         github: "https://github.com/adnane-workspace",
     },
@@ -133,7 +133,7 @@ export const projects = [
         id: 5,
         title: "STOCKLY — Plateforme de Gestion de Stock",
         description: "Plateforme complète de gestion des stocks et commerce pour PME. Backend Spring Boot + MySQL, frontend Angular, authentification JWT, conteneurisation Docker et déploiement cloud.",
-        image: "/AdnaneP/images/stokly.jpg",
+        image: "/images/stokly.jpg",
         tags: ["Spring Boot", "Angular", "MySQL", "Docker", "JWT"],
         github: "https://github.com/adnane-workspace",
     },
@@ -141,7 +141,7 @@ export const projects = [
         id: 6,
         title: "STOCKLY — Plateforme de Gestion de Stock",
         description: "Système académique complet avec tableau de bord multi-rôles, gestion CRUD des étudiants et professeurs, planification dynamique des filières/modules/salles/emplois du temps, saisie sécurisée des notes par les professeurs et consultation en temps réel par les étudiants, calcul automatique des moyennes pondérées (GPA). Interface premium basée sur Tailwind CSS (Geist/Inter, glassmorphism).",
-        image: "/AdnaneP/images/uni.png",
+        image: "/images/uni.png",
         tags: ["Laravel", "MySQL", "Docker", "JWT"],
         github: "https://github.com/adnane-workspace",
     }

@@ -59,8 +59,8 @@ const Navbar = () => {
 
     // Logo selon le thème
     const logoSrc = theme === 'dark'
-        ? '/AdnaneP/images/logo-dark.png'
-        : '/AdnaneP/images/logo-light.png';
+        ? '/images/logo-dark.png'
+        : '/images/logo-light.png';
 
     return (
         <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}>
