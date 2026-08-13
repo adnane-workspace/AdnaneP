@@ -140,7 +140,7 @@ export const projects = [
     },
     {
         id: 6,
-        title: "STOCKLY — Plateforme de Gestion de Stock",
+        title: "Système intelligent de gestion scolaire",
         description: "Système académique complet avec tableau de bord multi-rôles, gestion CRUD des étudiants et professeurs, planification dynamique des filières/modules/salles/emplois du temps, saisie sécurisée des notes par les professeurs et consultation en temps réel par les étudiants, calcul automatique des moyennes pondérées (GPA). Interface premium basée sur Tailwind CSS (Geist/Inter, glassmorphism).",
         image: "/images/uni.png",
         tags: ["Laravel", "MySQL", "Docker", "JWT"],
@@ -151,6 +151,16 @@ export const projects = [
 export const experiences = [
     {
         id: 1,
+        type: "work",
+        title: "Ingenieur QA",
+        company: "Neologix",
+        location: "Fès",
+        period: "01/07/2026 - 31/08/2026",
+        description: "Réalisation de tests manuels et automatisés sur l’application AvocatPro : conception et exécution de scénarios de test, tests fonctionnels et de régression, identification et suivi des anomalies.",
+        achievements: []
+    },
+    {
+        id: 2,
         type: "work",
         title: "Stagiaire en développement Full-Stack",
         company: "Nelogix",
@@ -164,7 +174,7 @@ export const experiences = [
         ]
     },
     {
-        id: 2,
+        id: 3,
         type: "work",
         title: "Stagiaire en développement Full-Stack",
         company: "COS ONEE",
@@ -177,7 +187,7 @@ export const experiences = [
         ]
     },
     {
-        id: 3,
+        id: 4,
         type: "work",
         title: "Stagiaire en développement web",
         company: "École polytechnique des Génies-Fès",
@@ -187,7 +197,7 @@ export const experiences = [
         achievements: []
     },
     {
-        id: 4,
+        id: 5,
         type: "education",
         title: "Cycle d'ingénieur en Génie Informatique",
         company: "UPF - Université Privée de Fès",
@@ -197,7 +207,7 @@ export const experiences = [
         achievements: []
     },
     {
-        id: 5,
+        id: 6,
         type: "education",
         title: "DTS Développement Digital Full stack",
         company: "OFPPT - Office de la formation professionnelle",

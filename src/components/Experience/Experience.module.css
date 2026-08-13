@@ -129,6 +129,13 @@
     font-weight: 700;
 }
 
+.showMore {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 60px;
+    margin-top: calc(var(--spacing-sm) * -1);
+}
+
 /* Responsive */
 @media (max-width: 968px) {
     .container {
@@ -149,5 +156,9 @@
 
     .timeline::before {
         left: 17px;
+    }
+
+    .showMore {
+        padding-left: 50px;
     }
 }
