@@ -1,9 +1,9 @@
 
 export const personalInfo = {
     name: "EL MENOUAR Adnane",
-    role: "Futur Ingénieur d'État en Informatique",
+    role: "Full-Stack Developer & QA Automation Engineer",
     tagline: "Étudiant motivé, passionné par le développement et les technologies",
-    description: "Étudiant motivé, passionné par le développement et les technologies, cherchant à renforcer ses compétences à travers des projets et expériences pratiques.",
+    description: "Développeur Full-Stack et QA Engineer passionné par la création d’applications modernes et fiables. Je combine mes compétences en développement web et en assurance qualité pour concevoir des solutions performantes, tout en automatisant les tests et en garantissant la qualité des applications.",
     email: "adnaneelmenouar7@gmail.com",
     phone: "+212 663-219524",
     location: "Lotissement Mamounia, Route de Setrou - Fès",
@@ -13,7 +13,8 @@ export const personalInfo = {
     avatars: [
         "/images/avatar.jpg",
         "/images/adnane2.jpeg",
-        "/images/adnane3.jpeg"
+        "/images/adnane3.jpeg",
+        "/images/adnane4.jpeg"
     ],
     resume: "/documents/cv.pdf"
 };
