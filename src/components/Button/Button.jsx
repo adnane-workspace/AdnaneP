@@ -18,18 +18,21 @@ const Button = ({
     href,
     disabled = false,
     className = '',
+    download,
     ...props
 }) => {
     const buttonClass = `${styles.button} ${styles[variant]} ${styles[size]} ${className}`;
 
-    // Si href est fourni, retourner un lien
     if (href) {
+        const isExternal = href.startsWith('http');
+        const isFile = /\.(pdf|doc|docx)$/i.test(href);
         return (
             <a
                 href={href}
                 className={buttonClass}
-                target={href.startsWith('http') ? '_blank' : '_self'}
-                rel={href.startsWith('http') ? 'noopener noreferrer' : ''}
+                target={isExternal || isFile ? '_blank' : '_self'}
+                rel={isExternal || isFile ? 'noopener noreferrer' : undefined}
+                download={isFile ? (download || true) : undefined}
                 {...props}
             >
                 {children}

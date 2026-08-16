@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiArrowDown } from 'react-icons/fi';
+import { FiArrowDown, FiDownload } from 'react-icons/fi';
 import { personalInfo } from '../../data/portfolioData';
 import { useLanguage } from '../../i18n/LanguageContext';
 import Button from '../Button/Button';
@@ -89,6 +89,14 @@ const Hero = () => {
                         <motion.div className={styles.buttons} variants={itemVariants}>
                             <Button href="#contact" variant="primary" size="large">
                                 {t('hero.contact')}
+                            </Button>
+                            <Button
+                                href={personalInfo.resume}
+                                variant="outline"
+                                size="large"
+                                download="CV-EL-MENOUAR-Adnane.pdf"
+                            >
+                                <FiDownload /> {t('hero.resume')}
                             </Button>
                             <Button href="#projects" variant="outline" size="large">
                                 {t('hero.projects')}

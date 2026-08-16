@@ -23,6 +23,7 @@ const fr = {
     hero: {
         greeting: 'Bonjour, je suis',
         contact: 'Me Contacter',
+        resume: 'Télécharger mon CV',
         projects: 'Voir mes projets',
         scrollEvents: 'Aller aux événements'
     },
