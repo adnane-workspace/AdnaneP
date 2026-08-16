@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../i18n/LanguageContext';
 import styles from './Navbar.module.css';
 
 /**
@@ -12,6 +14,7 @@ const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('hero');
     const { theme } = useTheme();
+    const { t } = useLanguage();
 
     // Détecter le scroll pour changer le style de la navbar
     useEffect(() => {
@@ -45,12 +48,12 @@ const Navbar = () => {
     }, [isMobileMenuOpen]);
 
     const navItems = [
-        { label: 'Accueil', href: '#hero' },
-        { label: 'Événements', href: '#events' },
-        { label: 'Projets', href: '#projects' },
-        { label: 'Compétences', href: '#skills' },
-        { label: 'Expérience', href: '#experience' },
-        { label: 'Contact', href: '#contact' }
+        { key: 'home', href: '#hero' },
+        { key: 'events', href: '#events' },
+        { key: 'projects', href: '#projects' },
+        { key: 'skills', href: '#skills' },
+        { key: 'experience', href: '#experience' },
+        { key: 'contact', href: '#contact' }
     ];
 
     useEffect(() => {
@@ -105,12 +108,12 @@ const Navbar = () => {
                 {/* Navigation Desktop */}
                 <ul className={styles.navLinks}>
                     {navItems.map((item) => (
-                        <li key={item.label}>
+                        <li key={item.key}>
                             <a
                                 href={item.href}
                                 className={`${styles.navLink} ${activeSection === item.href.slice(1) ? styles.navLinkActive : ''}`}
                             >
-                                {item.label}
+                                {t(`nav.${item.key}`)}
                             </a>
                         </li>
                     ))}
@@ -118,13 +121,14 @@ const Navbar = () => {
 
                 {/* Actions (Theme Toggle + Mobile Menu) */}
                 <div className={styles.actions}>
+                    <LanguageSwitcher />
                     <ThemeToggle />
 
                     {/* Bouton Menu Mobile */}
                     <button
                         className={styles.mobileMenuButton}
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+                        aria-label={isMobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
                         aria-expanded={isMobileMenuOpen}
                     >
                         {isMobileMenuOpen ? <FiX /> : <FiMenu />}
@@ -142,7 +146,7 @@ const Navbar = () => {
                     <ul className={styles.mobileNavLinks}>
                         {navItems.map((item, index) => (
                             <li
-                                key={item.label}
+                                key={item.key}
                                 style={{
                                     transitionDelay: `${index * 50 + 100}ms`,
                                     opacity: isMobileMenuOpen ? 1 : 0,
@@ -155,7 +159,7 @@ const Navbar = () => {
                                     className={`${styles.mobileNavLink} ${activeSection === item.href.slice(1) ? styles.mobileNavLinkActive : ''}`}
                                     onClick={handleNavClick}
                                 >
-                                    {item.label}
+                                    {t(`nav.${item.key}`)}
                                 </a>
                             </li>
                         ))}

@@ -1,22 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMessageSquare, FiX, FiSend } from 'react-icons/fi';
-import { personalInfo, projects, experiences, about } from '../../data/portfolioData';
+import { personalInfo } from '../../data/portfolioData';
+import { useLanguage } from '../../i18n/LanguageContext';
 import styles from './Chatbot.module.css';
 
-const SUGGESTED_QUESTIONS = [
-    "Pourquoi engager Adnane ?",
-    "Parle-moi de ses qualités",
-    "Voir ses meilleurs projets",
-    "Comment le contacter ?"
-];
-
 const Chatbot = () => {
+    const { t, lang, content, dictionary } = useLanguage();
+    const { projects, experiences, about } = content;
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
         {
             id: 0,
-            text: `Bonjour ! 👋 Je suis l'assistant personnel IA d'Adnane. Je suis là pour vous montrer pourquoi il est le profil idéal pour votre prochain projet. Que souhaitez-vous explorer en premier ?`,
+            text: t('chatbot.welcome'),
             isBot: true,
             isPlaceholder: false
         }
@@ -35,53 +31,61 @@ const Chatbot = () => {
         scrollToBottom();
     }, [messages]);
 
-    // Simple local responder (no RAG)
-    const simpleResponder = async (text) => {
-        const t = text.toLowerCase();
-        const normalized = t.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+    useEffect(() => {
+        setMessages((prev) => {
+            if (prev.length === 1 && prev[0].id === 0) {
+                return [{ ...prev[0], text: dictionary.chatbot.welcome }];
+            }
+            return prev;
+        });
+    }, [lang, dictionary]);
 
-        if (normalized.match(/\b(projet|projets|portfolio)\b/)) {
-            const projectNames = projects.map((project) => project.title).join(', ');
-            return `Voici quelques projets récents : ${projectNames}. Vous pouvez demander des détails sur un projet en particulier.`;
+    const simpleResponder = async (text) => {
+        const normalized = text.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
+
+        if (normalized.match(/\b(projet|projets|portfolio|project|projects)\b/)) {
+            const list = projects.map((project) => project.title).join(', ');
+            return t('chatbot.replies.projects', { list });
         }
 
-        if (normalized.match(/\b(contact|contacter|email|mail)\b/)) {
-            return `Vous pouvez me contacter par email : ${personalInfo.email} ou via le formulaire de contact sur le portfolio.`;
+        if (normalized.match(/\b(contact|contacter|email|mail|reach)\b/)) {
+            return t('chatbot.replies.contact', { email: personalInfo.email });
         }
 
         if (normalized.match(/\b(competen|competence|competences|technologie|technologies|skill|skills)\b/)) {
-            return `Adnane maîtrise notamment : Laravel, React, MySQL, Python, Java, Docker, PHP, Keycloak et JavaScript.`;
+            return t('chatbot.replies.skills');
         }
 
         if (normalized.match(/\b(cv|resume|curriculum|c v|curriculum vitae)\b/)) {
-            return `Mon CV est disponible ici : ${personalInfo.resume}`;
+            return t('chatbot.replies.resume', { url: personalInfo.resume });
         }
 
-        if (normalized.match(/\b(experience|experiences|stage|stages|stagiaire|stages?)\b/)) {
-            const expSummaries = experiences
+        if (normalized.match(/\b(experience|experiences|stage|stages|stagiaire|internship|intern)\b/)) {
+            const connector = lang === 'en' ? ' at ' : ' chez ';
+            const list = experiences
                 .filter((exp) => exp.type === 'work')
-                .map((exp) => `${exp.title} chez ${exp.company}`)
+                .map((exp) => `${exp.title}${connector}${exp.company}`)
                 .join(', ');
-            return `Adnane a travaillé sur : ${expSummaries}. Consultez la section expérience pour plus de détails.`;
+            return t('chatbot.replies.experience', { list });
         }
 
-        if (normalized.match(/\b(a propos|apropos|bio|qui es tu|qui es tu|present|parle moi|parle\-moi)\b/)) {
+        if (normalized.match(/\b(a propos|apropos|bio|qui es tu|about|who are you|tell me)\b/)) {
             return about.bio;
         }
 
-        if (normalized.match(/\b(qualit|fort|atout|points forts)\b/)) {
-            return 'Adnane est rigoureux, autonome et orienté résultats. Il sait travailler en équipe et produire des interfaces soignées et performantes.';
+        if (normalized.match(/\b(qualit|fort|atout|points forts|strength|strengths|hire|engager|why)\b/)) {
+            return t('chatbot.replies.qualities');
         }
 
-        if (normalized.match(/\b(formation|etude|etudes|diplome|diplome|universite|ofppt|upf)\b/)) {
-            return 'Il étudie actuellement en cycle d\'ingénieur en Génie Informatique à l\'Université Privée de Fès et est diplômé d\'un DTS Full Stack à l\'OFPPT.';
+        if (normalized.match(/\b(formation|etude|etudes|diplome|universite|ofppt|upf|education|degree|university)\b/)) {
+            return t('chatbot.replies.education');
         }
 
-        if (normalized.match(/\b(bonjour|salut|hello|coucou)\b/)) {
-            return 'Bonjour ! Je suis l\'assistant d\'Adnane. Posez une question sur ses projets, ses compétences ou ses expériences.';
+        if (normalized.match(/\b(bonjour|salut|hello|hi|coucou|hey)\b/)) {
+            return t('chatbot.replies.hello');
         }
 
-        return 'Je suis l\'assistant d\'Adnane. Posez une question sur ses projets, compétences ou expériences, et je vous répondrai.';
+        return t('chatbot.replies.fallback');
     };
 
     const handleSendText = async (text) => {
@@ -96,7 +100,7 @@ const Chatbot = () => {
 
         const placeholderMessage = {
             id: `placeholder-${Date.now()}`,
-            text: "Génération de la réponse...",
+            text: t('chatbot.generating'),
             isBot: true,
             isPlaceholder: true
         };
@@ -116,7 +120,7 @@ const Chatbot = () => {
             console.error('[Chatbot] Error:', error);
             setMessages((prev) => prev.map((msg) =>
                 msg.id === placeholderMessage.id
-                    ? { ...msg, text: '⚠️ Une erreur est survenue. Veuillez réessayer plus tard.', isPlaceholder: false }
+                    ? { ...msg, text: t('chatbot.error'), isPlaceholder: false }
                     : msg
             ));
         } finally {
@@ -144,8 +148,8 @@ const Chatbot = () => {
                             <div className={styles.headerInfo}>
                                 <img src={personalInfo.avatar} alt={personalInfo.name} className={styles.avatar} />
                                 <div>
-                                    <h4 className={styles.title}>Assistant Adnane</h4>
-                                    <span className={styles.status}>Prêt à vous répondre</span>
+                                    <h4 className={styles.title}>{t('chatbot.title')}</h4>
+                                    <span className={styles.status}>{t('chatbot.status')}</span>
                                 </div>
                             </div>
                             <button onClick={toggleChat} className={styles.closeButton}>
@@ -165,9 +169,9 @@ const Chatbot = () => {
                                     {/* Display suggestion grid immediately after the bot's last message */}
                                     {index === messages.length - 1 && msg.isBot && (
                                         <div className={styles.suggestionsGridContainer}>
-                                            <p className={styles.suggestionsTitle}>Essayez de demander :</p>
+                                            <p className={styles.suggestionsTitle}>{t('chatbot.suggestionsTitle')}</p>
                                             <div className={styles.suggestionsGrid}>
-                                                {SUGGESTED_QUESTIONS.map((question, i) => (
+                                                {dictionary.chatbot.suggestions.map((question, i) => (
                                                     <button 
                                                         key={i} 
                                                         className={styles.gridChip}
@@ -187,7 +191,7 @@ const Chatbot = () => {
                         <form onSubmit={handleSendMessage} className={styles.chatInput}>
                             <input
                                 type="text"
-                                placeholder="Posez une question à propos d'Adnane..."
+                                placeholder={t('chatbot.placeholder')}
                                 value={inputText}
                                 onChange={(e) => setInputText(e.target.value)}
                             />
@@ -202,6 +206,7 @@ const Chatbot = () => {
             <motion.button
                 className={styles.fab}
                 onClick={toggleChat}
+                aria-label={isOpen ? t('chatbot.close') : t('chatbot.open')}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
             >

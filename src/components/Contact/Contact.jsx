@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiUser, FiMessageSquare, FiSend } from 'react-icons/fi';
-import { personalInfo } from '../../data/portfolioData';
+import { useLanguage } from '../../i18n/LanguageContext';
 import Section from '../Section/Section';
 import Button from '../Button/Button';
 import styles from './Contact.module.css';
@@ -10,6 +10,7 @@ import styles from './Contact.module.css';
  * Section Contact avec formulaire
  */
 const Contact = () => {
+    const { t } = useLanguage();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -33,7 +34,7 @@ const Contact = () => {
             const formDataToSend = new FormData(e.target);
 
             // Ajouter des métadonnées supplémentaires
-            formDataToSend.append('subject', `Nouveau message de ${formData.name}`);
+            formDataToSend.append('subject', t('contact.subject', { name: formData.name }));
             formDataToSend.append('from_name', formData.name);
 
             // Envoyer à Web3Forms
@@ -67,9 +68,9 @@ const Contact = () => {
 
     return (
         <Section id="contact">
-            <h2 className="section-title">Contactez-moi</h2>
+            <h2 className="section-title">{t('contact.title')}</h2>
             <p className={styles.subtitle}>
-                Une question ? Un projet ? N'hésitez pas à me contacter !
+                {t('contact.subtitle')}
             </p>
 
             <div className={styles.container}>
@@ -81,10 +82,9 @@ const Contact = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h3 className={styles.infoTitle}>Restons en contact</h3>
+                    <h3 className={styles.infoTitle}>{t('contact.infoTitle')}</h3>
                     <p className={styles.infoText}>
-                        Je suis toujours ouvert aux nouvelles opportunités et collaborations.
-                        N'hésitez pas à me contacter !
+                        {t('contact.infoText')}
                     </p>
                 </motion.div>
 
@@ -96,7 +96,7 @@ const Contact = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    aria-label="Formulaire de contact"
+                    aria-label={t('contact.formAria')}
                 >
                     {/* Champ caché pour Web3Forms - Remplacez par votre clé d'accès */}
                     <input
@@ -108,7 +108,7 @@ const Contact = () => {
 
                     <div className={styles.formGroup}>
                         <label htmlFor="name" className={styles.label}>
-                            <FiUser aria-hidden="true" /> Nom
+                            <FiUser aria-hidden="true" /> {t('contact.name')}
                         </label>
                         <input
                             type="text"
@@ -118,14 +118,14 @@ const Contact = () => {
                             onChange={handleChange}
                             required
                             className={styles.input}
-                            placeholder="Votre nom"
+                            placeholder={t('contact.namePlaceholder')}
                             aria-required="true"
                         />
                     </div>
 
                     <div className={styles.formGroup}>
                         <label htmlFor="email" className={styles.label}>
-                            <FiMail aria-hidden="true" /> Email
+                            <FiMail aria-hidden="true" /> {t('contact.email')}
                         </label>
                         <input
                             type="email"
@@ -142,7 +142,7 @@ const Contact = () => {
 
                     <div className={styles.formGroup}>
                         <label htmlFor="message" className={styles.label}>
-                            <FiMessageSquare aria-hidden="true" /> Message
+                            <FiMessageSquare aria-hidden="true" /> {t('contact.message')}
                         </label>
                         <textarea
                             id="message"
@@ -152,7 +152,7 @@ const Contact = () => {
                             required
                             rows="5"
                             className={styles.textarea}
-                            placeholder="Votre message..."
+                            placeholder={t('contact.messagePlaceholder')}
                             aria-required="true"
                         />
                     </div>
@@ -163,24 +163,24 @@ const Contact = () => {
                         type="submit"
                         disabled={status === 'sending'}
                         className={styles.submitButton}
-                        aria-label="Envoyer le message"
+                        aria-label={t('contact.send')}
                     >
-                        {status === 'sending' ? 'Envoi...' : (
+                        {status === 'sending' ? t('contact.sending') : (
                             <>
-                                <FiSend aria-hidden="true" /> Envoyer le message
+                                <FiSend aria-hidden="true" /> {t('contact.send')}
                             </>
                         )}
                     </Button>
 
                     {status === 'success' && (
                         <div className={styles.successMessage} role="alert">
-                            ✓ Message envoyé avec succès !
+                            ✓ {t('contact.success')}
                         </div>
                     )}
 
                     {status === 'error' && (
                         <div className={styles.errorMessage} role="alert">
-                            ✗ Erreur lors de l'envoi. Veuillez réessayer.
+                            ✗ {t('contact.error')}
                         </div>
                     )}
                 </motion.form>

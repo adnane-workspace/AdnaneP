@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../i18n/LanguageContext';
 import styles from './ThemeToggle.module.css';
 
 /**
@@ -8,13 +9,14 @@ import styles from './ThemeToggle.module.css';
  */
 const ThemeToggle = () => {
     const { theme, toggleTheme } = useTheme();
+    const { t } = useLanguage();
 
     return (
         <button
             className={styles.toggle}
             onClick={toggleTheme}
-            aria-label="Changer de thème"
-            title={`Passer en mode ${theme === 'light' ? 'sombre' : 'clair'}`}
+            aria-label={t('theme.toggle')}
+            title={theme === 'light' ? t('theme.toDark') : t('theme.toLight')}
         >
             <div className={`${styles.iconWrapper} ${theme === 'dark' ? styles.dark : ''}`}>
                 <FiSun className={styles.sunIcon} />

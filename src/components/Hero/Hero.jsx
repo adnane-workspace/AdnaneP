@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowDown } from 'react-icons/fi';
-import { personalInfo, about } from '../../data/portfolioData';
+import { personalInfo } from '../../data/portfolioData';
+import { useLanguage } from '../../i18n/LanguageContext';
 import Button from '../Button/Button';
 import styles from './Hero.module.css';
 
@@ -10,6 +11,8 @@ import styles from './Hero.module.css';
  */
 const Hero = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const { t, content } = useLanguage();
+    const { about, personalInfo: info } = content;
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -55,12 +58,12 @@ const Hero = () => {
                     <div className={styles.textContent}>
                         
                         <motion.h1 className={styles.title} variants={itemVariants}>
-                            Bonjour, je suis <br />
+                            {t('hero.greeting')} <br />
                             <span className="gradient-text">{personalInfo.name}</span>
                         </motion.h1>
 
                         <motion.p className={styles.role} variants={itemVariants}>
-                            {personalInfo.role}
+                            {info.role}
                         </motion.p>
 
                         <motion.p className={styles.description} variants={itemVariants}>
@@ -85,10 +88,10 @@ const Hero = () => {
 
                         <motion.div className={styles.buttons} variants={itemVariants}>
                             <Button href="#contact" variant="primary" size="large">
-                                Me Contacter
+                                {t('hero.contact')}
                             </Button>
                             <Button href="#projects" variant="outline" size="large">
-                                Voir mes projets
+                                {t('hero.projects')}
                             </Button>
                         </motion.div>
                     </div>
@@ -122,6 +125,7 @@ const Hero = () => {
                     href="#events"
                     className={styles.scrollDown}
                     variants={itemVariants}
+                    aria-label={t('hero.scrollEvents')}
                     animate={{ y: [0, 10, 0] }}
                     transition={{ repeat: Infinity, duration: 1.5 }}
                 >

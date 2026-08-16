@@ -7,6 +7,7 @@ import {
     SiJavascript, SiTypescript, SiTailwindcss, SiRedux, SiOpenid
 } from 'react-icons/si';
 import { skills } from '../../data/portfolioData';
+import { useLanguage } from '../../i18n/LanguageContext';
 import Section from '../Section/Section';
 import LogoLoop from '../LogoLoop/LogoLoop';
 import { useTheme } from '../../context/ThemeContext';
@@ -41,6 +42,7 @@ const iconMap = {
  */
 const Skills = () => {
     const { theme } = useTheme();
+    const { t } = useLanguage();
     const isDarkMode = theme === 'dark';
 
     // Préparer les logos pour LogoLoop
@@ -62,7 +64,7 @@ const Skills = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
             >
-                Compétences Techniques
+                {t('skills.title')}
             </motion.h2>
 
             <motion.div
@@ -82,7 +84,7 @@ const Skills = () => {
                     fadeOut={true}
                     scaleOnHover={true}
                     drakeMode={isDarkMode}
-                    ariaLabel="Compétences techniques"
+                    ariaLabel={t('skills.aria')}
                     className={styles.skillsLoop}
                 />
             </motion.div>

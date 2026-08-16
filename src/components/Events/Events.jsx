@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FiAward, FiChevronLeft, FiChevronRight, FiMapPin, FiX } from 'react-icons/fi';
-import { events } from '../../data/portfolioData';
+import { useLanguage } from '../../i18n/LanguageContext';
 import Section from '../Section/Section';
 import styles from './Events.module.css';
 
-const formatEventDate = (value) => {
+const formatEventDate = (value, locale = 'fr-FR') => {
     if (!value) return '';
     const parts = value.split('-').map(Number);
     if (parts.length !== 3 || parts.some(Number.isNaN)) return value;
     const [day, month, year] = parts;
-    return new Date(year, month - 1, day).toLocaleDateString('fr-FR', {
+    return new Date(year, month - 1, day).toLocaleDateString(locale, {
         day: 'numeric',
         month: 'long',
         year: 'numeric'
@@ -19,6 +19,7 @@ const formatEventDate = (value) => {
 
 const EventPost = ({ event, active, onOpenLightbox }) => {
     const [imageIndex, setImageIndex] = useState(0);
+    const { t, dateLocale } = useLanguage();
     const images = event.images || [];
     const isFirstPlace = Boolean(event.result && /1/.test(event.result));
 
@@ -62,7 +63,7 @@ const EventPost = ({ event, active, onOpenLightbox }) => {
 
                     {(event.date || event.location) && (
                         <div className={styles.mediaMeta}>
-                            {event.date && <span>{formatEventDate(event.date)}</span>}
+                            {event.date && <span>{formatEventDate(event.date, dateLocale)}</span>}
                             {event.date && event.location && <span className={styles.dotSep}>·</span>}
                             {event.location && (
                                 <span className={styles.mediaLocation}>
@@ -82,7 +83,7 @@ const EventPost = ({ event, active, onOpenLightbox }) => {
                                 type="button"
                                 className={`${styles.imageNav} ${styles.imageNavLeft}`}
                                 onClick={showPrevImage}
-                                aria-label="Photo précédente"
+                                aria-label={t('events.prevPhoto')}
                             >
                                 <FiChevronLeft />
                             </button>
@@ -90,7 +91,7 @@ const EventPost = ({ event, active, onOpenLightbox }) => {
                                 type="button"
                                 className={`${styles.imageNav} ${styles.imageNavRight}`}
                                 onClick={showNextImage}
-                                aria-label="Photo suivante"
+                                aria-label={t('events.nextPhoto')}
                             >
                                 <FiChevronRight />
                             </button>
@@ -125,6 +126,8 @@ const Events = () => {
     const lightboxTrackRef = useRef(null);
     const postIndexRef = useRef(0);
     const draggedRef = useRef(false);
+    const { t, content } = useLanguage();
+    const events = content.events;
     const [lightbox, setLightbox] = useState(null);
     const [lightboxIndex, setLightboxIndex] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -353,15 +356,15 @@ const Events = () => {
 
     return (
         <Section id="events" className={styles.section}>
-            <h2 className="section-title">Événements</h2>
-            <p className={styles.subtitle}>Compétitions, hackathons et rencontres</p>
+            <h2 className="section-title">{t('events.title')}</h2>
+            <p className={styles.subtitle}>{t('events.subtitle')}</p>
 
             <div className={`${styles.carousel} ${canScrollRight ? styles.hasPeek : ''}`}>
                 <button
                     type="button"
                     className={`${styles.arrow} ${styles.arrowLeft}`}
                     onClick={() => scrollByCard(-1)}
-                    aria-label="Événement précédent"
+                    aria-label={t('events.prev')}
                     disabled={!canScrollLeft}
                 >
                     <FiChevronLeft />
@@ -371,7 +374,7 @@ const Events = () => {
                     className={styles.track}
                     ref={trackRef}
                     tabIndex={0}
-                    aria-label="Carrousel d'événements"
+                    aria-label={t('events.carousel')}
                 >
                     {events.map((event, index) => (
                         <div
@@ -395,7 +398,7 @@ const Events = () => {
                     type="button"
                     className={`${styles.arrow} ${styles.arrowRight}`}
                     onClick={() => scrollByCard(1)}
-                    aria-label="Événement suivant"
+                    aria-label={t('events.next')}
                     disabled={!canScrollRight}
                 >
                     <FiChevronRight />
@@ -404,7 +407,7 @@ const Events = () => {
 
             {events.length > 1 && (
                 <div className={styles.progress}>
-                    <div className={styles.progressDots} role="tablist" aria-label="Navigation des événements">
+                    <div className={styles.progressDots} role="tablist" aria-label={t('events.nav')}>
                         {events.map((event, index) => (
                             <button
                                 key={event.id}
@@ -433,7 +436,7 @@ const Events = () => {
                             type="button"
                             className={styles.lightboxClose}
                             onClick={closeLightbox}
-                            aria-label="Fermer"
+                            aria-label={t('events.close')}
                         >
                             <FiX />
                         </button>
@@ -446,7 +449,7 @@ const Events = () => {
                                     e.stopPropagation();
                                     scrollLightbox(-1);
                                 }}
-                                aria-label="Photo précédente"
+                                aria-label={t('events.prevPhoto')}
                             >
                                 <FiChevronLeft />
                             </button>
@@ -460,7 +463,7 @@ const Events = () => {
                                     e.stopPropagation();
                                     scrollLightbox(1);
                                 }}
-                                aria-label="Photo suivante"
+                                aria-label={t('events.nextPhoto')}
                             >
                                 <FiChevronRight />
                             </button>

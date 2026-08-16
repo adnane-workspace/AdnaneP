@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiBriefcase, FiBook, FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { experiences } from '../../data/portfolioData';
+import { useLanguage } from '../../i18n/LanguageContext';
 import Section from '../Section/Section';
 import Button from '../Button/Button';
 import styles from './Experience.module.css';
@@ -13,6 +13,8 @@ const INITIAL_WORK_VISIBLE = 2;
  */
 const Experience = () => {
     const [showAllWork, setShowAllWork] = useState(false);
+    const { t, content } = useLanguage();
+    const experiences = content.experiences;
     const workExperiences = experiences.filter((exp) => exp.type === 'work');
     const education = experiences.filter((exp) => exp.type === 'education');
     const visibleWork = showAllWork
@@ -69,12 +71,12 @@ const Experience = () => {
 
     return (
         <Section id="experience">
-            <h2 className="section-title">Expérience & Formation</h2>
+            <h2 className="section-title">{t('experience.title')}</h2>
 
             <div className={styles.container}>
                 <div className={styles.column}>
                     <h3 className={styles.columnTitle}>
-                        <FiBriefcase /> Expérience Professionnelle
+                        <FiBriefcase /> {t('experience.work')}
                     </h3>
                     <div className={styles.timeline}>
                         <AnimatePresence initial={false}>
@@ -92,11 +94,11 @@ const Experience = () => {
                             >
                                 {showAllWork ? (
                                     <>
-                                        Voir moins <FiChevronUp />
+                                        {t('experience.less')} <FiChevronUp />
                                     </>
                                 ) : (
                                     <>
-                                        Voir plus <FiChevronDown />
+                                        {t('experience.more')} <FiChevronDown />
                                     </>
                                 )}
                             </Button>
@@ -106,7 +108,7 @@ const Experience = () => {
 
                 <div className={styles.column}>
                     <h3 className={styles.columnTitle}>
-                        <FiBook /> Formation
+                        <FiBook /> {t('experience.education')}
                     </h3>
                     <div className={styles.timeline}>
                         {education.map((edu, index) => (

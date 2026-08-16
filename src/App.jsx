@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './i18n/LanguageContext';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import Events from './components/Events/Events';
@@ -15,6 +16,7 @@ import styles from './App.module.css';
 function App() {
     return (
         <ThemeProvider>
+            <LanguageProvider>
             <div className={styles.app}>
                 <Navbar />
 
@@ -31,6 +33,7 @@ function App() {
                 <Footer />
                 <Chatbot />
             </div>
+            </LanguageProvider>
         </ThemeProvider>
     );
 }

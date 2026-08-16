@@ -1,12 +1,14 @@
 import React from 'react';
 import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiHeart } from 'react-icons/fi';
 import { socialLinks, personalInfo } from '../../data/portfolioData';
+import { useLanguage } from '../../i18n/LanguageContext';
 import styles from './Footer.module.css';
 
 /**
  * Footer avec liens réseaux sociaux
  */
 const Footer = () => {
+    const { content } = useLanguage();
     const currentYear = new Date().getFullYear();
 
     const socials = [
@@ -20,7 +22,7 @@ const Footer = () => {
                 {/* Logo / Nom */}
                 <div className={styles.brand}>
                     <h3 className={styles.name}>{personalInfo.name}</h3>
-                    <p className={styles.tagline}>{personalInfo.role}</p>
+                    <p className={styles.tagline}>{content.personalInfo.role}</p>
                 </div>
 
                 {/* Réseaux sociaux */}

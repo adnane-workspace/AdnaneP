@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiGithub, FiExternalLink, FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { projects } from '../../data/portfolioData';
+import { useLanguage } from '../../i18n/LanguageContext';
 import Section from '../Section/Section';
 import Card from '../Card/Card';
 import Button from '../Button/Button';
@@ -14,6 +14,8 @@ const INITIAL_VISIBLE = 3;
  */
 const Projects = () => {
     const [showAll, setShowAll] = useState(false);
+    const { t, content } = useLanguage();
+    const projects = content.projects;
     const visibleProjects = showAll ? projects : projects.slice(0, INITIAL_VISIBLE);
     const hasMore = projects.length > INITIAL_VISIBLE;
 
@@ -50,9 +52,9 @@ const Projects = () => {
 
     return (
         <Section id="projects">
-            <h2 className="section-title">Mes Projets</h2>
+            <h2 className="section-title">{t('projects.title')}</h2>
             <p className={styles.subtitle}>
-                Découvrez une sélection de mes réalisations récentes
+                {t('projects.subtitle')}
             </p>
 
             <motion.div
@@ -81,7 +83,7 @@ const Projects = () => {
                                         loading="lazy"
                                     />
                                     {project.featured && (
-                                        <span className={styles.featuredBadge}>À la une</span>
+                                        <span className={styles.featuredBadge}>{t('projects.featured')}</span>
                                     )}
                                 </div>
 
@@ -105,7 +107,7 @@ const Projects = () => {
                                                 rel="noopener noreferrer"
                                                 className={styles.link}
                                             >
-                                                <FiGithub /> Code
+                                                <FiGithub /> {t('projects.code')}
                                             </a>
                                         )}
                                         {project.demo && (
@@ -115,7 +117,7 @@ const Projects = () => {
                                                 rel="noopener noreferrer"
                                                 className={styles.link}
                                             >
-                                                <FiExternalLink /> Demo
+                                                <FiExternalLink /> {t('projects.demo')}
                                             </a>
                                         )}
                                     </div>
@@ -131,11 +133,11 @@ const Projects = () => {
                     <Button variant="outline" size="medium" onClick={handleToggle}>
                         {showAll ? (
                             <>
-                                Voir moins <FiChevronUp />
+                                {t('projects.less')} <FiChevronUp />
                             </>
                         ) : (
                             <>
-                                Voir plus <FiChevronDown />
+                                {t('projects.more')} <FiChevronDown />
                             </>
                         )}
                     </Button>
