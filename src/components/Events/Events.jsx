@@ -17,7 +17,7 @@ const formatEventDate = (value) => {
     });
 };
 
-const EventPost = ({ event, onOpenLightbox }) => {
+const EventPost = ({ event, active, onOpenLightbox }) => {
     const [imageIndex, setImageIndex] = useState(0);
     const images = event.images || [];
     const isFirstPlace = Boolean(event.result && /1/.test(event.result));
@@ -39,11 +39,14 @@ const EventPost = ({ event, onOpenLightbox }) => {
                     <button
                         type="button"
                         className={styles.mediaButton}
-                        onClick={() => onOpenLightbox({
-                            images,
-                            startIndex: imageIndex,
-                            title: event.title
-                        })}
+                        onClick={() => {
+                            if (!active) return;
+                            onOpenLightbox({
+                                images,
+                                startIndex: imageIndex,
+                                title: event.title
+                            });
+                        }}
                     >
                         <img src={images[imageIndex]} alt={event.title} />
                     </button>
@@ -121,7 +124,7 @@ const Events = () => {
     const trackRef = useRef(null);
     const lightboxTrackRef = useRef(null);
     const postIndexRef = useRef(0);
-    const isPagingRef = useRef(false);
+    const draggedRef = useRef(false);
     const [lightbox, setLightbox] = useState(null);
     const [lightboxIndex, setLightboxIndex] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -133,22 +136,56 @@ const Events = () => {
             ? Array.from(trackRef.current.querySelectorAll(`.${styles.postWrap}`))
             : [];
 
-    const updateArrows = (index = postIndexRef.current) => {
-        setCanScrollLeft(index > 0);
-        setCanScrollRight(index < events.length - 1);
+    const maxScrollLeft = () => {
+        const track = trackRef.current;
+        if (!track) return 0;
+        return Math.max(0, track.scrollWidth - track.clientWidth);
     };
 
-    const syncPostIndex = () => {
+    const targetLeftForIndex = (index) => {
+        const track = trackRef.current;
+        const posts = getPosts();
+        if (!track || !posts[index]) return 0;
+        const left = posts[index].offsetLeft - posts[0].offsetLeft;
+        return Math.min(left, maxScrollLeft());
+    };
+
+    const syncFromScroll = () => {
         const track = trackRef.current;
         const posts = getPosts();
         if (!track || posts.length === 0) return;
-        const gap = parseFloat(getComputedStyle(track).gap) || 16;
-        const step = posts[0].offsetWidth + gap;
-        if (!step) return;
-        const index = Math.max(0, Math.min(events.length - 1, Math.round(track.scrollLeft / step)));
-        postIndexRef.current = index;
-        setActiveIndex(index);
-        updateArrows(index);
+
+        const trackLeft = track.getBoundingClientRect().left;
+        let best = 0;
+        let bestDist = Infinity;
+
+        posts.forEach((el, i) => {
+            const distPx = el.getBoundingClientRect().left - trackLeft;
+            const dist = Math.abs(distPx);
+            const width = el.offsetWidth || 1;
+            el.style.setProperty('--peek', String(Math.min(1, dist / width)));
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = i;
+            }
+        });
+
+        const atEnd = track.scrollLeft >= maxScrollLeft() - 12;
+        const index = atEnd ? posts.length - 1 : best;
+        if (atEnd) {
+            posts.forEach((el, i) => {
+                el.style.setProperty('--peek', i === index ? '0' : '1');
+            });
+        }
+
+        if (index !== postIndexRef.current) {
+            postIndexRef.current = index;
+            setActiveIndex(index);
+        }
+        const left = track.scrollLeft > 8;
+        const right = track.scrollLeft < maxScrollLeft() - 8;
+        setCanScrollLeft((prev) => (prev === left ? prev : left));
+        setCanScrollRight((prev) => (prev === right ? prev : right));
     };
 
     const scrollToPost = (index) => {
@@ -159,31 +196,22 @@ const Events = () => {
         const next = Math.max(0, Math.min(index, posts.length - 1));
         postIndexRef.current = next;
         setActiveIndex(next);
-        updateArrows(next);
-        const gap = parseFloat(getComputedStyle(track).gap) || 16;
-        const step = posts[0].offsetWidth + gap;
-        track.scrollTo({ left: next * step, behavior: 'smooth' });
+        track.scrollTo({ left: targetLeftForIndex(next), behavior: 'smooth' });
     };
 
     const scrollByCard = (direction) => {
-        if (isPagingRef.current) return;
-        isPagingRef.current = true;
         scrollToPost(postIndexRef.current + direction);
-        window.setTimeout(() => {
-            isPagingRef.current = false;
-        }, 500);
     };
 
     useEffect(() => {
         const track = trackRef.current;
         if (!track) return;
 
-        const onWheel = (e) => {
-            const horizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-            if (!horizontal) return;
-            e.preventDefault();
-            if (Math.abs(e.deltaX) < 8) return;
-            scrollByCard(e.deltaX > 0 ? 1 : -1);
+        const drag = {
+            active: false,
+            pointerId: null,
+            startX: 0,
+            startScroll: 0
         };
 
         const onKey = (e) => {
@@ -197,19 +225,75 @@ const Events = () => {
             }
         };
 
-        updateArrows(0);
-        const frame = requestAnimationFrame(syncPostIndex);
-        track.addEventListener('scroll', syncPostIndex, { passive: true });
-        track.addEventListener('wheel', onWheel, { passive: false });
+        const onPointerDown = (e) => {
+            if (e.pointerType !== 'mouse' || e.button !== 0) return;
+            if (e.target.closest(`.${styles.imageNav}`)) return;
+            drag.active = true;
+            drag.pointerId = e.pointerId;
+            drag.startX = e.clientX;
+            drag.startScroll = track.scrollLeft;
+            draggedRef.current = false;
+        };
+
+        const onPointerMove = (e) => {
+            if (!drag.active || e.pointerId !== drag.pointerId) return;
+            const dx = e.clientX - drag.startX;
+            if (Math.abs(dx) < 6) return;
+            draggedRef.current = true;
+            track.classList.add(styles.isDragging);
+            track.scrollLeft = drag.startScroll - dx;
+        };
+
+        const onPointerUp = (e) => {
+            if (!drag.active || e.pointerId !== drag.pointerId) return;
+            drag.active = false;
+            track.classList.remove(styles.isDragging);
+            if (draggedRef.current) {
+                const posts = getPosts();
+                const trackLeft = track.getBoundingClientRect().left;
+                let nearest = 0;
+                let bestDist = Infinity;
+                posts.forEach((el, i) => {
+                    const dist = Math.abs(el.getBoundingClientRect().left - trackLeft);
+                    if (dist < bestDist) {
+                        bestDist = dist;
+                        nearest = i;
+                    }
+                });
+                if (track.scrollLeft >= maxScrollLeft() - 12) {
+                    nearest = posts.length - 1;
+                }
+                scrollToPost(nearest);
+            }
+        };
+
+        const onClickCapture = (e) => {
+            if (!draggedRef.current) return;
+            e.preventDefault();
+            e.stopPropagation();
+            draggedRef.current = false;
+        };
+
+        const frame = requestAnimationFrame(syncFromScroll);
+        track.addEventListener('scroll', syncFromScroll, { passive: true });
         track.addEventListener('keydown', onKey);
-        window.addEventListener('resize', syncPostIndex);
+        track.addEventListener('pointerdown', onPointerDown);
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerUp);
+        track.addEventListener('click', onClickCapture, true);
+        window.addEventListener('resize', syncFromScroll);
 
         return () => {
             cancelAnimationFrame(frame);
-            track.removeEventListener('scroll', syncPostIndex);
-            track.removeEventListener('wheel', onWheel);
+            track.removeEventListener('scroll', syncFromScroll);
             track.removeEventListener('keydown', onKey);
-            window.removeEventListener('resize', syncPostIndex);
+            track.removeEventListener('pointerdown', onPointerDown);
+            window.removeEventListener('pointermove', onPointerMove);
+            window.removeEventListener('pointerup', onPointerUp);
+            window.removeEventListener('pointercancel', onPointerUp);
+            track.removeEventListener('click', onClickCapture, true);
+            window.removeEventListener('resize', syncFromScroll);
         };
     }, [lightbox]);
 
@@ -297,9 +381,14 @@ const Events = () => {
                                 if (index !== activeIndex) scrollToPost(index);
                             }}
                         >
-                            <EventPost event={event} onOpenLightbox={openLightbox} />
+                            <EventPost
+                                event={event}
+                                active={index === activeIndex}
+                                onOpenLightbox={openLightbox}
+                            />
                         </div>
                     ))}
+                    <div className={styles.trackSpacer} aria-hidden="true" />
                 </div>
 
                 <button

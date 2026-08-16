@@ -37,13 +37,19 @@
 }
 
 .track {
+    --card-w: min(38rem, 64%);
+    --track-gap: 1.25rem;
     display: flex;
-    gap: 1.25rem;
+    gap: var(--track-gap);
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-snap-stop: always;
-    scroll-behavior: smooth;
-    padding: 0.15rem 0 0.35rem;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    scroll-behavior: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    cursor: grab;
+    padding: 0.35rem 0 0.55rem;
     scrollbar-width: none;
     -ms-overflow-style: none;
     outline: none;
@@ -53,31 +59,38 @@
     display: none;
 }
 
+.track.isDragging {
+    scroll-snap-type: none;
+    cursor: grabbing;
+    user-select: none;
+}
+
+.track.isDragging .post {
+    pointer-events: none;
+}
+
 .postWrap {
-    flex: 0 0 64%;
+    flex: 0 0 var(--card-w);
     min-width: 0;
     scroll-snap-align: start;
-    scroll-snap-stop: always;
+    scroll-snap-stop: normal;
+}
+
+.trackSpacer {
+    flex: 0 0 calc(100% - var(--card-w) - var(--track-gap));
+    pointer-events: none;
+    scroll-snap-align: none;
 }
 
 .postPeek {
     cursor: pointer;
 }
 
-.postWrap:not(.postActive) .post {
-    opacity: 0.32;
-    filter: saturate(0.65);
-    transform: scale(0.97);
-    pointer-events: none;
-    box-shadow: none;
-    transition: opacity 500ms ease, filter 500ms ease, transform 500ms ease;
-}
-
-.postActive .post {
-    opacity: 1;
-    filter: none;
-    transform: none;
-    transition: opacity 500ms ease, filter 500ms ease, transform 500ms ease, box-shadow 400ms ease;
+.postWrap .post {
+    opacity: calc(1 - (var(--peek, 0) * 0.58));
+    transform: scale(calc(1 - (var(--peek, 0) * 0.045)));
+    filter: saturate(calc(1 - (var(--peek, 0) * 0.38)));
+    transform-origin: center center;
 }
 
 .post {
@@ -246,8 +259,21 @@
     transition: opacity 220ms ease, transform 220ms ease;
 }
 
+.postWrap:not(.postActive) .imageNav,
+.postWrap:not(.postActive) .counter {
+    display: none;
+}
+
+.postWrap:not(.postActive) .mediaButton {
+    cursor: pointer;
+}
+
 .media:hover .imageNav {
     opacity: 1;
+}
+
+.postWrap:not(.postActive) .mediaButton {
+    cursor: pointer;
 }
 
 .imageNav:hover {
@@ -513,8 +539,8 @@
 }
 
 @media (max-width: 768px) {
-    .postWrap {
-        flex: 0 0 86%;
+    .track {
+        --card-w: min(22rem, 84%);
     }
 
     .body {
