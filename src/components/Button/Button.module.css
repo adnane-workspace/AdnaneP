@@ -5,31 +5,13 @@
     gap: 0.5rem;
     font-weight: 600;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-full);
     cursor: pointer;
-    transition: all var(--transition-base);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
     font-family: var(--font-family);
     text-decoration: none;
     position: relative;
-    overflow: hidden;
-}
-
-.button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.button:hover::before {
-    width: 300px;
-    height: 300px;
+    letter-spacing: 0.01em;
 }
 
 .button:disabled {
@@ -37,16 +19,15 @@
     cursor: not-allowed;
 }
 
-/* Variants */
 .primary {
     background: var(--gradient-primary);
-    color: white;
-    box-shadow: var(--shadow-md);
+    color: #fff8f0;
+    box-shadow: 0 10px 24px rgba(var(--color-primary-rgb), 0.28);
 }
 
 .primary:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 16px 32px rgba(var(--color-primary-rgb), 0.34);
 }
 
 .primary:active:not(:disabled) {
@@ -56,7 +37,7 @@
 .secondary {
     background: var(--color-bg-secondary);
     color: var(--color-text);
-    border: 2px solid var(--color-border);
+    border: 1px solid var(--color-border);
 }
 
 .secondary:hover:not(:disabled) {
@@ -68,36 +49,36 @@
 
 .outline {
     background: transparent;
-    color: var(--color-primary);
-    border: 2px solid var(--color-primary);
+    color: var(--color-text);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.35);
 }
 
 .outline:hover:not(:disabled) {
-    background: var(--color-primary);
-    color: white;
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
     transform: translateY(-2px);
 }
 
-/* Sizes */
 .small {
-    padding: 0.5rem 1rem;
+    padding: 0.45rem 1rem;
     font-size: var(--font-size-sm);
 }
 
 .medium {
-    padding: 0.75rem 1.5rem;
+    padding: 0.7rem 1.35rem;
     font-size: var(--font-size-base);
 }
 
 .large {
-    padding: 1rem 2rem;
-    font-size: var(--font-size-lg);
+    padding: 0.9rem 1.7rem;
+    font-size: 0.98rem;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .large {
-        padding: 0.875rem 1.75rem;
+        padding: 0.85rem 1.4rem;
         font-size: var(--font-size-base);
+        width: 100%;
     }
 }

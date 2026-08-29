@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiHeart } from 'react-icons/fi';
+import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import { socialLinks, personalInfo } from '../../data/portfolioData';
 import { useLanguage } from '../../i18n/LanguageContext';
 import styles from './Footer.module.css';
@@ -9,7 +9,6 @@ import styles from './Footer.module.css';
  */
 const Footer = () => {
     const { content } = useLanguage();
-    const currentYear = new Date().getFullYear();
 
     const socials = [
         { icon: FiGithub, url: socialLinks.github, label: 'GitHub' },
@@ -44,7 +43,7 @@ const Footer = () => {
                         );
                     })}
                 </div>
-                <h5>{personalInfo.phone}</h5>
+                <p className={styles.phone}>{personalInfo.phone}</p>
             </div>
         </footer>
     );

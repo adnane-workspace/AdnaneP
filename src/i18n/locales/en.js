@@ -118,6 +118,10 @@ const en = {
             { label: 'Technologies' }
         ],
         projects: {
+            7: {
+                title: 'SCANOSH — QR digital menu',
+                description: 'Digital menu solution for cafés, restaurants and snack bars: scan a QR code, instant access to the menu, and simple management from a dashboard. Update anytime, with a smooth mobile experience.'
+            },
             3: {
                 title: 'Personal Portfolio',
                 description: 'A modern, responsive professional portfolio built with React and Vite. Skills, projects and experience with smooth animations and dark mode.'

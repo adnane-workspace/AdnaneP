@@ -18,6 +18,8 @@ function App() {
         <ThemeProvider>
             <LanguageProvider>
             <div className={styles.app}>
+                <div className={styles.atmosphere} aria-hidden="true" />
+                <div className={styles.grain} aria-hidden="true" />
                 <Navbar />
 
                 <main className={styles.main}>

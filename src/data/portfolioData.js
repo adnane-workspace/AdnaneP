@@ -99,6 +99,15 @@ export const skills = [
 
 export const projects = [
     {
+        id: 7,
+        title: "SCANOSH — Menu digital QR",
+        description: "Solution de menu digital pour cafés, restaurants et snacks : un QR code à scanner, accès instantané au menu, et gestion simple depuis un dashboard. Mise à jour à tout moment, expérience mobile fluide.",
+        image: "/images/scanosh.jpg",
+        tags: ["React", "Express JS", "PostgreSQL","Cloudinary","Cloudflare"],
+        github: "https://github.com/adnane-workspace",
+        featured: true
+    },
+    {
         id: 3,
         title: "Portfolio Personnel",
         description: "Portfolio professionnel moderne et responsive développé avec React et Vite. Présentation de mes compétences, projets et expériences avec animations fluides et mode sombre.",
@@ -268,7 +277,7 @@ export const about = {
     ],
     stats: [
         { label: "Années d'études", value: "3+" },
-        { label: "Projets réalisés", value: "5+" },
+        { label: "Projets réalisés", value: "7+" },
         { label: "Stages complétés", value: "3" },
         { label: "Technologies", value: "10+" }
     ]
