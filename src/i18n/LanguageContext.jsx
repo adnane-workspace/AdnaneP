@@ -6,6 +6,7 @@ import {
     experiences as experiencesMeta,
     personalInfo as personalMeta,
     projects as projectsMeta,
+    servicesList as servicesMeta,
     skills
 } from '../data/portfolioData';
 
@@ -54,6 +55,10 @@ export const LanguageProvider = ({ children }) => {
             projects: projectsMeta.map((project) => ({
                 ...project,
                 ...(c.projects[project.id] || {})
+            })),
+            services: servicesMeta.map((service) => ({
+                ...service,
+                ...(c.services[service.id] || {})
             })),
             experiences: experiencesMeta.map((item) => ({
                 ...item,

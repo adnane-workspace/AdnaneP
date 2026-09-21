@@ -50,8 +50,9 @@ const Navbar = () => {
     const navItems = [
         { key: 'home', href: '#hero' },
         { key: 'events', href: '#events' },
-        { key: 'projects', href: '#projects' },
+        { key: 'services', href: '#services' },
         { key: 'skills', href: '#skills' },
+        { key: 'projects', href: '#projects' },
         { key: 'experience', href: '#experience' },
         { key: 'contact', href: '#contact' }
     ];

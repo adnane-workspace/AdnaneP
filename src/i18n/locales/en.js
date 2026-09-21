@@ -8,8 +8,9 @@ const en = {
     nav: {
         home: 'Home',
         events: 'Events',
-        projects: 'Projects',
+        services: 'Services',
         skills: 'Skills',
+        projects: 'Projects',
         experience: 'Experience',
         contact: 'Contact',
         openMenu: 'Open menu',
@@ -50,6 +51,13 @@ const en = {
     skills: {
         title: 'Technical Skills',
         aria: 'Technical skills'
+    },
+    services: {
+        eyebrow: 'In production',
+        title: 'Services',
+        subtitle: 'A live product I am building for cafés, restaurants and snack bars.',
+        featured: 'Live',
+        visit: 'Open SCANOSH'
     },
     experience: {
         title: 'Experience & Education',
@@ -92,6 +100,7 @@ const en = {
         open: 'Open chat',
         close: 'Close chat',
         replies: {
+            services: 'Adnane is currently building {{title}}, a QR digital menu. You can see it here: {{url}}',
             projects: 'Here are some recent projects: {{list}}. You can ask for details about a specific one.',
             contact: 'You can reach me by email at {{email}} or through the contact form on this portfolio.',
             skills: 'Adnane works with Laravel, React, MySQL, Python, Java, Docker, PHP, Keycloak and JavaScript.',
@@ -145,6 +154,13 @@ const en = {
             6: {
                 title: 'Intelligent school management system',
                 description: 'Full academic system with a multi-role dashboard, student and teacher CRUD, dynamic planning for majors/modules/rooms/timetables, secure grade entry by teachers and live student consultation, automatic weighted GPA. Premium Tailwind CSS interface (Geist/Inter, glassmorphism).'
+            }
+        },
+        services: {
+            7: {
+                title: 'SCANOSH — QR digital menu',
+                description: 'Digital menu for cafés, restaurants and snack bars: scan a QR code, instant access to the menu, and simple dashboard management. Update anytime.',
+                tags: ['React', 'Express JS', 'PostgreSQL', 'Cloudinary', 'Cloudflare']
             }
         },
         experiences: {

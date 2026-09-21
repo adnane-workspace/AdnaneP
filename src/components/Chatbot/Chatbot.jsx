@@ -7,7 +7,7 @@ import styles from './Chatbot.module.css';
 
 const Chatbot = () => {
     const { t, lang, content, dictionary } = useLanguage();
-    const { projects, experiences, about } = content;
+    const { projects, experiences, about, services } = content;
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
         {
@@ -43,8 +43,16 @@ const Chatbot = () => {
     const simpleResponder = async (text) => {
         const normalized = text.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
 
+        if (normalized.match(/\b(scanosh|menu digital|qr|service|services)\b/)) {
+            const item = services[0];
+            return t('chatbot.replies.services', {
+                title: item?.title || 'SCANOSH',
+                url: item?.url || 'https://scanosh.com'
+            });
+        }
+
         if (normalized.match(/\b(projet|projets|portfolio|project|projects)\b/)) {
-            const list = projects.map((project) => project.title).join(', ');
+            const list = [...services, ...projects].map((item) => item.title).join(', ');
             return t('chatbot.replies.projects', { list });
         }
 

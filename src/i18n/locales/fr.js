@@ -8,8 +8,9 @@ const fr = {
     nav: {
         home: 'Accueil',
         events: 'Événements',
-        projects: 'Projets',
+        services: 'Services',
         skills: 'Compétences',
+        projects: 'Projets',
         experience: 'Expérience',
         contact: 'Contact',
         openMenu: 'Ouvrir le menu',
@@ -50,6 +51,13 @@ const fr = {
     skills: {
         title: 'Compétences Techniques',
         aria: 'Compétences techniques'
+    },
+    services: {
+        eyebrow: 'En production',
+        title: 'Services',
+        subtitle: 'Un produit en ligne que je construis pour les cafés, restaurants et snacks.',
+        featured: 'En ligne',
+        visit: 'Ouvrir SCANOSH'
     },
     experience: {
         title: 'Expérience & Formation',
@@ -92,6 +100,7 @@ const fr = {
         open: 'Ouvrir le chat',
         close: 'Fermer le chat',
         replies: {
+            services: 'Adnane construit actuellement {{title}}, un menu digital par QR. Vous pouvez le voir ici : {{url}}',
             projects: 'Voici quelques projets récents : {{list}}. Vous pouvez demander des détails sur un projet en particulier.',
             contact: 'Vous pouvez me contacter par email : {{email}} ou via le formulaire de contact sur le portfolio.',
             skills: 'Adnane maîtrise notamment : Laravel, React, MySQL, Python, Java, Docker, PHP, Keycloak et JavaScript.',
@@ -145,6 +154,13 @@ const fr = {
             6: {
                 title: 'Système intelligent de gestion scolaire',
                 description: 'Système académique complet avec tableau de bord multi-rôles, gestion CRUD des étudiants et professeurs, planification dynamique des filières/modules/salles/emplois du temps, saisie sécurisée des notes par les professeurs et consultation en temps réel par les étudiants, calcul automatique des moyennes pondérées (GPA). Interface premium basée sur Tailwind CSS (Geist/Inter, glassmorphism).'
+            }
+        },
+        services: {
+            7: {
+                title: 'SCANOSH — Menu digital QR',
+                description: 'Menu digital pour cafés, restaurants et snacks : un QR code à scanner, accès instantané au menu, et gestion depuis un dashboard. Mise à jour à tout moment.',
+                tags: ['React', 'Express JS', 'PostgreSQL', 'Cloudinary', 'Cloudflare']
             }
         },
         experiences: {

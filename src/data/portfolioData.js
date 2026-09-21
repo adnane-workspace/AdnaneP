@@ -1,9 +1,8 @@
-
 export const personalInfo = {
     name: "EL MENOUAR Adnane",
     role: "Full-Stack Developer & QA Automation Engineer",
     tagline: "Étudiant motivé, passionné par le développement et les technologies",
-    description: "Développeur Full-Stack et QA Engineer passionné par la création d’applications modernes et fiables. Je combine mes compétences en développement web et en assurance qualité pour concevoir des solutions performantes, tout en automatisant les tests et en garantissant la qualité des applications.",
+    description: "Développeur Full-Stack et QA Engineer passionné par la création d'applications modernes et fiables. Je combine mes compétences en développement web et en assurance qualité pour concevoir des solutions performantes, tout en automatisant les tests et en garantissant la qualité des applications.",
     email: "adnaneelmenouar7@gmail.com",
     phone: "+212 663-219524",
     location: "Lotissement Mamounia, Route de Setrou - Fès",
@@ -99,15 +98,6 @@ export const skills = [
 
 export const projects = [
     {
-        id: 7,
-        title: "SCANOSH — Menu digital QR",
-        description: "Solution de menu digital pour cafés, restaurants et snacks : un QR code à scanner, accès instantané au menu, et gestion simple depuis un dashboard. Mise à jour à tout moment, expérience mobile fluide.",
-        image: "/images/scanosh.jpg",
-        tags: ["React", "Express JS", "PostgreSQL","Cloudinary","Cloudflare"],
-        github: "https://github.com/adnane-workspace",
-        featured: true
-    },
-    {
         id: 3,
         title: "Portfolio Personnel",
         description: "Portfolio professionnel moderne et responsive développé avec React et Vite. Présentation de mes compétences, projets et expériences avec animations fluides et mode sombre.",
@@ -157,6 +147,18 @@ export const projects = [
     }
 ];  
 
+export const servicesList = [
+    {
+        id: 7,
+        title: "SCANOSH — Menu digital QR",
+        description: "Menu digital pour cafés, restaurants et snacks : un QR code à scanner, accès instantané au menu, et gestion depuis un dashboard. Mise à jour à tout moment.",
+        image: "/images/scanosh.jpg",
+        tags: ["React", "Express JS", "PostgreSQL", "Cloudinary", "Cloudflare"],
+        url: "https://scanosh.com",
+        featured: true
+    }
+];
+
 export const experiences = [
     {
         id: 1,
@@ -165,7 +167,7 @@ export const experiences = [
         company: "Neologix",
         location: "Fès",
         period: "01/07/2026 - 31/08/2026",
-        description: "Réalisation de tests manuels et automatisés sur l’application AvocatPro : conception et exécution de scénarios de test, tests fonctionnels et de régression, identification et suivi des anomalies.",
+        description: "Réalisation de tests manuels et automatisés sur l'application AvocatPro : conception et exécution de scénarios de test, tests fonctionnels et de régression, identification et suivi des anomalies.",
         achievements: []
     },
     {
