@@ -61,19 +61,6 @@ const EventPost = ({ event, active, onOpenLightbox }) => {
                         </p>
                     )}
 
-                    {(event.date || event.location) && (
-                        <div className={styles.mediaMeta}>
-                            {event.date && <span>{formatEventDate(event.date, dateLocale)}</span>}
-                            {event.date && event.location && <span className={styles.dotSep}>·</span>}
-                            {event.location && (
-                                <span className={styles.mediaLocation}>
-                                    <FiMapPin />
-                                    {event.location}
-                                </span>
-                            )}
-                        </div>
-                    )}
-
                     {images.length > 1 && (
                         <>
                             <span className={styles.counter}>
@@ -101,10 +88,22 @@ const EventPost = ({ event, active, onOpenLightbox }) => {
             )}
 
             <div className={styles.body}>
+                {(event.date || event.location) && (
+                    <p className={styles.meta}>
+                        {event.date && <span>{formatEventDate(event.date, dateLocale)}</span>}
+                        {event.date && event.location && <span className={styles.dotSep}>·</span>}
+                        {event.location && (
+                            <span className={styles.mediaLocation}>
+                                <FiMapPin aria-hidden="true" />
+                                {event.location}
+                            </span>
+                        )}
+                    </p>
+                )}
                 {event.title && (
-                    <h4 className={`${styles.title} ${event.featured ? styles.titleFeatured : ''}`}>
+                    <h3 className={`${styles.title} ${event.featured ? styles.titleFeatured : ''}`}>
                         {event.title}
-                    </h4>
+                    </h3>
                 )}
                 {event.description && (
                     <p className={styles.description}>{event.description}</p>
@@ -115,6 +114,9 @@ const EventPost = ({ event, active, onOpenLightbox }) => {
                             <span key={tag} className={styles.tag}>{tag}</span>
                         ))}
                     </div>
+                )}
+                {active && images.length > 0 && (
+                    <p className={styles.hint}>{t('events.photos')}</p>
                 )}
             </div>
         </article>
@@ -356,8 +358,11 @@ const Events = () => {
 
     return (
         <Section id="events" className={styles.section}>
-            <h2 className="section-title">{t('events.title')}</h2>
-            <p className={styles.subtitle}>{t('events.subtitle')}</p>
+            <header className={styles.header}>
+                <p className={styles.eyebrow}>{t('events.eyebrow')}</p>
+                <h2 className="section-title">{t('events.title')}</h2>
+                <p className={styles.subtitle}>{t('events.subtitle')}</p>
+            </header>
 
             <div className={`${styles.carousel} ${canScrollRight ? styles.hasPeek : ''}`}>
                 <button
@@ -407,6 +412,9 @@ const Events = () => {
 
             {events.length > 1 && (
                 <div className={styles.progress}>
+                    <span className={styles.progressCount} aria-hidden="true">
+                        {String(activeIndex + 1).padStart(2, '0')} / {String(events.length).padStart(2, '0')}
+                    </span>
                     <div className={styles.progressDots} role="tablist" aria-label={t('events.nav')}>
                         {events.map((event, index) => (
                             <button

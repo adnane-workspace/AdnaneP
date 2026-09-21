@@ -29,8 +29,10 @@ const en = {
         scrollEvents: 'Go to events'
     },
     events: {
+        eyebrow: 'Agenda',
         title: 'Events',
         subtitle: 'Competitions, hackathons and meetups',
+        photos: 'View photos',
         prev: 'Previous event',
         next: 'Next event',
         carousel: 'Events carousel',

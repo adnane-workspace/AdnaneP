@@ -29,8 +29,10 @@ const fr = {
         scrollEvents: 'Aller aux événements'
     },
     events: {
+        eyebrow: 'Agenda',
         title: 'Événements',
         subtitle: 'Compétitions, hackathons et rencontres',
+        photos: 'Voir les photos',
         prev: 'Événement précédent',
         next: 'Événement suivant',
         carousel: "Carrousel d'événements",
