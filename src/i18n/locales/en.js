@@ -120,8 +120,8 @@ const en = {
     content: {
         role: 'Full-Stack Developer & QA Automation Engineer',
         tagline: 'Motivated student, passionate about development and technology',
-        description: 'Full-Stack developer and QA engineer focused on building modern, reliable applications. I combine web development and quality assurance to ship performant solutions, while automating tests and safeguarding product quality.',
-        bio: 'Computer engineering student passionate about full-stack development and new technologies. I work with Laravel, React, MySQL, Python and Java. My goal is to grow through concrete projects and hands-on experience.',
+        description: 'Computer engineering student passionate about web development and software quality. I am equally interested in designing performant full-stack applications and validating them through testing practices (functional tests, API testing and automation). Rigorous and detail-oriented, I aim to contribute to projects by ensuring reliability, performance and a strong user experience.',
+        bio: 'Computer engineering student passionate about web development and software quality. I am equally interested in designing performant full-stack applications and validating them through testing practices (functional tests, API testing and automation). Rigorous and detail-oriented, I aim to contribute to projects by ensuring reliability, performance and a strong user experience.',
         stats: [
             { label: 'Years of study' },
             { label: 'Projects shipped' },

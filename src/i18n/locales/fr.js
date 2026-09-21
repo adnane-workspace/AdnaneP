@@ -120,8 +120,8 @@ const fr = {
     content: {
         role: 'Full-Stack Developer & QA Automation Engineer',
         tagline: 'Étudiant motivé, passionné par le développement et les technologies',
-        description: "Développeur Full-Stack et QA Engineer passionné par la création d'applications modernes et fiables. Je combine mes compétences en développement web et en assurance qualité pour concevoir des solutions performantes, tout en automatisant les tests et en garantissant la qualité des applications.",
-        bio: "Étudiant en génie informatique, passionné par le développement full-stack et les nouvelles technologies. Je maîtrise plusieurs technologies dont Laravel, React, MySQL, Python et Java. Mon objectif est de renforcer mes compétences à travers des projets concrets et des expériences pratiques enrichissantes.",
+        description: "Étudiant en ingénierie informatique, passionné par le développement web et la qualité logicielle. Je m’intéresse à la fois à la conception d’applications full stack performantes et à leur validation à travers des pratiques de testing (tests fonctionnels, API et automatisation). Rigoureux et orienté détail, je cherche à contribuer à des projets en assurant fiabilité, performance et bonne expérience utilisateur.",
+        bio: "Étudiant en ingénierie informatique, passionné par le développement web et la qualité logicielle. Je m’intéresse à la fois à la conception d’applications full stack performantes et à leur validation à travers des pratiques de testing (tests fonctionnels, API et automatisation). Rigoureux et orienté détail, je cherche à contribuer à des projets en assurant fiabilité, performance et bonne expérience utilisateur.",
         stats: [
             { label: "Années d'études" },
             { label: 'Projets réalisés' },
